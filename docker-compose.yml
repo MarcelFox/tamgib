@@ -1,10 +1,10 @@
 version: "3"
 
 services: 
-  example:
+  tamgib:
     image: node:lts-alpine3.13
     labels: 
-      project: "EXAMPLE"
+      project: "tamgib"
     ports: 
       - "8080:8080"
     volumes:

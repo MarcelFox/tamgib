@@ -1,6 +1,6 @@
 const path = require("path");
 const dotenv = require("dotenv");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 dotenv.config();
@@ -13,13 +13,15 @@ module.exports = {
   mode: NODE_ENV,
   entry: "./src/main.js",
   output: {
-    path: path.resolve(__dirname, "dist"),
     filename: "bundle.[hash].js",
   },
   devtool: "inline-source-map",
   devServer: {
     hot: true,
+    open: true,
     port: port,
+    compress: true,
+    host: "0.0.0.0",
     historyApiFallback: true,
   },
   resolve: {
@@ -27,6 +29,7 @@ module.exports = {
     alias: {
       "@Domain": path.resolve(__dirname, "src/domains"),
       "@Core": path.resolve(__dirname, "src/core"),
+      "@Public": path.resolve(__dirname, "src/core/public"),
       "@": path.resolve(__dirname, "src"),
     },
   },
@@ -35,22 +38,24 @@ module.exports = {
     rules: [
       {
         test: /\.html$/i,
-        loader: 'html-loader',
-        options:{
-          minimize: true
-        }
+        loader: "html-loader",
+        options: {
+          minimize: true,
+        },
       },
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules|public)/,
         use: {
           loader: "babel-loader",
           options: {
+            cacheDirectory: true,
             presets: ["@babel/preset-env", "@babel/preset-react"],
             plugins: [
-              "@babel/plugin-proposal-object-rest-spread",
-              "@babel/plugin-syntax-dynamic-import",
+              "react-hot-loader/babel",
               "@babel/plugin-proposal-class-properties",
+              "@babel/plugin-syntax-dynamic-import",
+              "@babel/plugin-proposal-object-rest-spread",
             ],
           },
         },
@@ -77,9 +82,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
-      favicon: "./public/favicon.ico",
-      filename: "index.html",
+      template: "./src/core/public/index.html",
+      favicon: "./src/core/public/favicon.ico",
     }),
   ],
 };

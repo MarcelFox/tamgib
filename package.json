@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "webpack serve --liveReload",
     "build": "webpack",
+    "docker:build": "docker-compose run tamgib npm run build",
+    "docker:dev": "docker-compose run -p8080:8080 tamgib npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,7 +30,9 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-hot-loader": "^4.13.0",
+    "react-router-dom": "^5.2.0",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
