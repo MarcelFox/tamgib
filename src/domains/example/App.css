@@ -1,4 +1,13 @@
 body {
-    color: white;
-    background-color: blue;
+    color: f6f6f6;
+    background-color: whitesmoke;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+}
+
+li {
+    padding: 5px;
 }
